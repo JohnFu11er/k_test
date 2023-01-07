@@ -1,16 +1,20 @@
 #!/bin/bash
 
+LOGGING_FILE = /home/ubuntu/k8s_build_log.txt
+
+
 function status_logging() {
-    echo $1 >> ./build_output.txt
-    sudo wall -n $1
+    log_msg=$1
+    echo $log_msg >> LOGGING_FILE
+    sudo wall -n $log_msg
 }
 
 #############################
 # Basic node configuration
 
-touch build_output.txt
+touch $LOGGING_FILE
 
-status_logging "starting build"
+status_logging "- starting build"
 
 swapoff -a
 
@@ -34,7 +38,10 @@ sudo apt-get update
 sudo apt-get install -y containerd
 
   
-status_logging "containerd installed"
+status_logging "- containerd installed"
+
+
+
 
 sudo mkdir -p /etc/containerd
 sudo containerd config default | sudo tee /etc/containerd/config.toml
@@ -42,6 +49,9 @@ sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i 's/            SystemdCgroup = false/            SystemdCgroup = true/' /etc/containerd/config.toml
 
 sudo systemctl restart containerd
+status_logging "- containerd restarted"
+
+
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
@@ -50,16 +60,18 @@ sudo apt-get update
 
 VERSION=1.24.3-00
 sudo apt-get install -y kubelet=$VERSION kubeadm=$VERSION kubectl=$VERSION
+status_logging "- kubelet, kubeadm, and kubectl installed"
+
 sudo apt-mark hold kubelet kubeadm kubectl containerd
+
 
 sudo systemctl enable kubelet.service
 sudo systemctl enable containerd.service
-
-status_logging "base node build complete"
+status_logging "- base node build complete"
 
 #############################
 # Control-node configuration
 wget https://docs.projectcalico.org/manifests/calico.yaml
 
 sudo kubeadm init --kubernetes-version v1.24.3
-status_logging "kuberenetes build complete"
+status_logging "- control plane node build complete"
