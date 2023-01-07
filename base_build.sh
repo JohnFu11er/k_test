@@ -5,7 +5,7 @@ LOGGING_FILE=/home/ubuntu/k8s_build_log.txt
 
 function status_logging() {
     log_msg=$1
-    echo $log_msg >> LOGGING_FILE
+    echo $log_msg >> $LOGGING_FILE
     sudo wall -n $log_msg
 }
 
