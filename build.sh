@@ -62,4 +62,4 @@ status_logging "base node build complete"
 wget https://docs.projectcalico.org/manifests/calico.yaml
 
 sudo kubeadm init --kubernetes-version v1.24.3
-status_logging "kuberenetes build compete"
+status_logging "kuberenetes build complete"
