@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOGGING_FILE = /home/ubuntu/k8s_build_log.txt
+LOGGING_FILE=/home/ubuntu/k8s_build_log.txt
 
 
 function status_logging() {
@@ -69,9 +69,3 @@ sudo systemctl enable kubelet.service
 sudo systemctl enable containerd.service
 status_logging "- base node build complete"
 
-#############################
-# Control-node configuration
-wget https://docs.projectcalico.org/manifests/calico.yaml
-
-sudo kubeadm init --kubernetes-version v1.24.3
-status_logging "- control plane node build complete"
