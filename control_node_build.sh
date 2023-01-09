@@ -12,7 +12,7 @@ function status_logging() {
 
 #############################
 # Control-node configuration
-wget https://docs.projectcalico.org/manifests/calico.yaml
+sudo wget https://docs.projectcalico.org/manifests/calico.yaml
 
 sudo kubeadm init --kubernetes-version v1.24.3
 status_logging "- control plane node build complete"
