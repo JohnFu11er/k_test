@@ -16,3 +16,11 @@ wget https://docs.projectcalico.org/manifests/calico.yaml
 
 sudo kubeadm init --kubernetes-version v1.24.3
 status_logging "- control plane node build complete"
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+status_logging "- configured API server access"
+
+kubectl apply -f calico.yaml
+status_logging "deployed yaml file for the pod network"
