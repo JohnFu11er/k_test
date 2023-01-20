@@ -14,7 +14,7 @@ function status_logging() {
 # Control-node configuration
 sudo wget https://docs.projectcalico.org/manifests/calico.yaml
 
-sudo kubeadm init --kubernetes-version v1.24.3
+sudo kubeadm init --kubernetes-version v1.24.9
 status_logging "- control plane node build complete"
 
 mkdir -p $HOME/.kube
