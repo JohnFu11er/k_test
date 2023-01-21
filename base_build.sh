@@ -58,8 +58,9 @@ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https:/
 
 sudo apt-get update
 
-VERSION=1.24.9-00
-sudo apt-get install -y kubelet=$VERSION kubeadm=$VERSION kubectl=$VERSION
+# VERSION=1.24.9-00
+# sudo apt-get install -y kubelet=$VERSION kubeadm=$VERSION kubectl=$VERSION
+sudo apt-get install -y kubelet kubeadm kubectl
 status_logging "- kubelet, kubeadm, and kubectl installed"
 
 sudo apt-mark hold kubelet kubeadm kubectl containerd
