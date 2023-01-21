@@ -77,5 +77,14 @@ sudo apt-mark hold kubelet kubeadm kubectl containerd
 
 sudo systemctl enable kubelet.service
 sudo systemctl enable containerd.service
+
+
+# set new hostname
+curl http://169.254.169.254/latest/meta-data/tags/instance/Name | sudo tee /etc/hostname
+status_logging "- hostname updated"
+
 status_logging "- base node build complete"
 
+status_logging "- restarting system"
+
+sudo reboot
